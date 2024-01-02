@@ -1,13 +1,32 @@
 # さくらインターネット H100
 
-## パスワードの変更
-```sh
-passwd　
-```
-パスワードの変更を行う. 
+## sshdの設定
+- 設定を変更
+  - `/etc/ssh/sshd_config`
+    - `PubkeyAuthentication yes`
+    - `PasswordAuthentication no`
+  - `/etc/ssh/sshd_config.d/50-cloud-init.conf`
+    - `PasswordAuthentication no`
+- `sudo systemctl restart sshd`　で設定を反映
 
-## お任せ
+## ユーザ登録とパスワードの変更
 ```sh
+sudo useradd -m newuser
+sudo passwd newuser
+sudo gpasswd -a newuser sudo
+sudo su newuser
+cd
+mkdir .ssh
+chmod 700 .ssh
+touch .ssh/authorized_keys
+chmod 600 .ssh/authorized_keys
+cat somewhere >> .ssh/authorized_keys
+```
+
+## 各ユーザの初期設定
+初期パスワードを変更＋デフォルトシェルをbashに変更
+```sh
+passwd
 chsh -s /bin/bash
 ```
 
