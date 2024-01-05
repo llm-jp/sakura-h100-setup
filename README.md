@@ -316,3 +316,34 @@ GLOOで初期される前に,
 os.environ['GLOO_SOCKET_IFNAME'] = 'bond0'
 ```
 を差し込んでおく.
+
+## cudnn
+
+https://developer.nvidia.com/rdp/cudnn-download
+
+cuda12.1で環境構築をしていたので、Local Installer for Ubuntu22.04 x86_64 (Deb)
+
+をダウンロード
+
+そのあとは, 
+
+To install the key, run this command:
+```
+sudo cp /var/cudnn-local-repo-ubuntu2204-8.9.7.29/cudnn-local-08A7D361-keyring.gpg /usr/share/keyrings/
+```
+と言われたので実行
+
+```
+sudo apt-get update
+sudo apt-get install libcudnn8 libcudnn8-dev
+```
+
+```python
+>>> import torch
+>>> print(torch.backends.cudnn.enabled)
+True
+>>> print(torch.backends.cudnn.version())
+8907
+```
+
+一応確認
